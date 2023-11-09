@@ -1,17 +1,22 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ui/widgets/customdropdown.dart';
+import 'package:go_router/go_router.dart';
+import 'package:go_router/src/route.dart';
+import 'package:ui/web/screens/form_screen%20copy.dart';
+import '../../widgets/customdropdown.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:ui/controllers/scrollconroller.dart';
-import 'package:ui/web/screens/form_screen.dart';
-import 'package:ui/web/screens/homepage.dart';
-import 'package:ui/web/screens/productfrom_screen.dart';
+import '../../controllers/scrollconroller.dart';
+
+import 'homepage.dart';
+import 'productfrom_screen.dart';
 
 class TopNavigatiobarviewState extends StatefulWidget {
-  const TopNavigatiobarviewState({super.key});
+  final String location;
+  final StatefulNavigationShell child;
+  const TopNavigatiobarviewState({super.key, required this.location, required this.child});
 
   @override
   State<TopNavigatiobarviewState> createState() =>
@@ -34,6 +39,8 @@ double maxscrollextent = 0;
 class _TopNavigatiobarviewStateState extends State<TopNavigatiobarviewState> {
   @override
   Widget build(BuildContext context) {
+     String _currentpath = GoRouterState.of(context).uri.toString();
+       GoRouter router = GoRouter.of(context);
     bool ismobile = MediaQuery.of(context).size.width < 700 ? true : false;
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -140,7 +147,7 @@ class _TopNavigatiobarviewStateState extends State<TopNavigatiobarviewState> {
             )
           : null,
       body: NestedScrollView(
-        floatHeaderSlivers: true,
+      
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
             ismobile
@@ -220,9 +227,18 @@ class _TopNavigatiobarviewStateState extends State<TopNavigatiobarviewState> {
                         children: [
                           InkWell(
                             onTap: () {
-                              setState(() {
-                                screenIndex = 0;
-                              });
+                           
+                           
+              
+              
+          
+            String location = "/home";
+               router.go(location);
+            
+              
+          
+                                    
+                                  
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -233,8 +249,8 @@ class _TopNavigatiobarviewStateState extends State<TopNavigatiobarviewState> {
                                   Text(
                                     "Home",
                                     style: TextStyle(
-                                      fontSize: screenIndex == 0 ? 17 : 15,
-                                      color: screenIndex == 0
+                                      fontSize: _currentpath == "/home" ? 17 : 15,
+                                      color: _currentpath == "/home"
                                           ? Colors.green
                                           : Colors.grey,
                                     ),
@@ -249,7 +265,7 @@ class _TopNavigatiobarviewStateState extends State<TopNavigatiobarviewState> {
                                             bottomLeft: Radius.circular(9),
                                             bottomRight: Radius.circular(9))),
                                     duration: Duration(milliseconds: 500),
-                                    width: screenIndex == 0 ? 20 : 0,
+                                    width:  _currentpath=='/home' ? 20 : 0,
                                     height: 3,
                                   )
                                 ],
@@ -268,15 +284,7 @@ class _TopNavigatiobarviewStateState extends State<TopNavigatiobarviewState> {
                               children: [
                                 Text(
                                   "Create",
-                                  style: TextStyle(
-                                    fontSize:
-                                        screenIndex == 1 || screenIndex == 2
-                                            ? 17
-                                            : 15,
-                                    color: screenIndex == 1 || screenIndex == 2
-                                        ? Colors.green
-                                        : Colors.grey,
-                                  ),
+                              style: TextStyle(color: _currentpath=='/enter_crop_screen' || _currentpath== '/enter_product_screen'?Colors.green:Colors.grey),
                                 ),
                               ],
                             ),
@@ -286,23 +294,37 @@ class _TopNavigatiobarviewStateState extends State<TopNavigatiobarviewState> {
                                   title: TextButton(
                                     child: Text(
                                       "Crop form",
-                                      style: TextStyle(color: Colors.black),
+                                      style: TextStyle(color:Colors.black),
                                     ),
                                     onPressed: () {
-                                      setState(() {
-                                        screenIndex = 1;
-                                      });
+                           
+              
+             
+          
+            String location = "/enter_crop_screen";
+               router.go(location);
+            
+              
+          
                                     },
                                   )),
-                              ListTile(
+                          ListTile(
                                   mouseCursor: SystemMouseCursors.click,
                                   title: TextButton(
-                                    child: Text("Prouct form",
-                                        style: TextStyle(color: Colors.black)),
+                                    child: Text(
+                                      "Product form",
+                                      style: TextStyle(color:Colors.black),
+                                    ),
                                     onPressed: () {
-                                      setState(() {
-                                        screenIndex = 2;
-                                      });
+                           
+              
+              
+          
+            String location = "/enter_product_screen";
+               router.go(location);
+            
+              
+          
                                     },
                                   )),
                             ],
@@ -336,7 +358,7 @@ class _TopNavigatiobarviewStateState extends State<TopNavigatiobarviewState> {
                   )
           ];
         },
-        body: page[screenIndex],
+        body:widget.child,
       ),
       floatingActionButton: ClipRRect(
         borderRadius:

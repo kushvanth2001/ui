@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ui/constants.dart';
+import '../../constants.dart';
 
 class Stage {
   String description = '';

@@ -3,12 +3,13 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ui/constants.dart';
+import '../../constants.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ui/web/models/products.dart';
+import '../models/products.dart';
 import 'package:http/http.dart' as http;
+import 'package:rive/rive.dart';
 
 class ProductFormScreen extends StatefulWidget {
   @override
@@ -87,7 +88,23 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body:FutureBuilder(
+        future:   Future.delayed(Duration(seconds: 1)),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            
+            return  Container(
+              color: Colors.transparent,
+              child: Center(
+                child: RiveAnimation.asset(
+                  'riv/plantloading.riv',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            );
+          } else {
+          
+            return  SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Form(
           key: _formKey,
@@ -410,8 +427,13 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
               ),
             ),
           ),
-        ),
+        ));// Replace with your actual page content widget
+          }
+        },
       ),
     );
+      
+      
+    
   }
 }

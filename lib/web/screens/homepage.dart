@@ -7,8 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:footer/footer.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:ui/controllers/scrollconroller.dart';
-import 'package:ui/widgets/fotter.dart';
+import '../../controllers/scrollconroller.dart';
+import '../../widgets/fotter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
